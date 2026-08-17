@@ -4,123 +4,89 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="theme-color" content="#180020">
-<title>Moonlight Designs — Alpha Splitter V1</title>
+<title>Moonlight Designs — Smart Splitter V3</title>
 <style>
-:root{--bg:#130018;--purple:#7618d7;--pink:#ff2aa8;--lav:#d8a7ff;--ink:#fff8ff;--panel:rgba(38,5,51,.88);--line:rgba(255,255,255,.14)}
+:root{--purple:#7618d7;--pink:#ff2aa8;--lav:#d8a7ff;--panel:rgba(38,5,51,.9);--line:rgba(255,255,255,.14)}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;touch-action:manipulation}
-body{overflow-x:hidden;background:
-radial-gradient(circle at 18% 10%,rgba(255,42,168,.22),transparent 25%),
-radial-gradient(circle at 82% 25%,rgba(118,24,215,.3),transparent 28%),
-linear-gradient(155deg,#120018,#25002e 48%,#10001b)}
-body:before{content:"✦  ☾  ·  ✧  ★  ·  ☽  ✦  ·  ★  ✧  ☾  ·  ✦  ☽  ·  ★  ✧  ☾  ·  ✦";position:fixed;inset:0;color:rgba(255,255,255,.14);font-size:28px;line-height:105px;letter-spacing:22px;word-spacing:32px;pointer-events:none;transform:rotate(-7deg) scale(1.15)}
-.wrap{width:min(940px,100%);margin:auto;padding:calc(20px + env(safe-area-inset-top)) 16px calc(34px + env(safe-area-inset-bottom));position:relative}
-.brand{text-align:center;padding:18px 8px 22px}
-.brand .moon{font-size:46px;filter:drop-shadow(0 0 14px rgba(255,42,168,.6))}
-h1{margin:4px 0 3px;font-size:clamp(29px,7vw,48px);line-height:1;background:linear-gradient(90deg,#e1b6ff,#ff42b5);-webkit-background-clip:text;color:transparent}
-.tag{color:#edcfff;font-weight:700;letter-spacing:.08em;font-size:12px;text-transform:uppercase}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:24px;padding:18px;box-shadow:0 18px 50px rgba(0,0,0,.35);backdrop-filter:blur(12px)}
-h2{margin:0 0 6px;font-size:24px}.sub{margin:0 0 17px;color:#dfcce7;font-size:14px}
-.controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-label{font-size:12px;color:#ebd7f4;font-weight:800}
-.field{display:flex;flex-direction:column;gap:6px}
-input,select,button{font:inherit;font-size:16px}
-input,select{width:100%;border:1px solid var(--line);background:#21052d;color:white;border-radius:13px;padding:12px;outline:none}
-.file{position:relative;overflow:hidden;display:block;border:2px dashed rgba(255,42,168,.55);border-radius:18px;padding:19px;text-align:center;background:rgba(255,42,168,.08);margin-bottom:13px;font-weight:800}
+html,body{margin:0;min-height:100%;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#fff;touch-action:manipulation}
+body{overflow-x:hidden;background:radial-gradient(circle at 20% 8%,rgba(255,42,168,.25),transparent 26%),radial-gradient(circle at 80% 25%,rgba(118,24,215,.35),transparent 28%),linear-gradient(150deg,#100016,#280032 52%,#11001c)}
+body:before{content:"✦  ☾  ·  ✧  ★  ☽  ·  ✦  ☾  ★  ·  ✧  ☽  ✦  ·  ★  ☾  ✧";position:fixed;inset:-50px;color:rgba(255,255,255,.13);font-size:30px;line-height:110px;letter-spacing:25px;word-spacing:30px;transform:rotate(-8deg);pointer-events:none}
+.wrap{position:relative;width:min(980px,100%);margin:auto;padding:calc(18px + env(safe-area-inset-top)) 15px calc(35px + env(safe-area-inset-bottom))}
+header{text-align:center;padding:15px 5px 22px}.moon{font-size:44px}h1{font-size:clamp(30px,7vw,48px);margin:3px;background:linear-gradient(90deg,#e6c2ff,#ff3eaf);-webkit-background-clip:text;color:transparent}.tag{font-size:12px;font-weight:900;letter-spacing:.1em;color:#e9c8f8}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:24px;padding:17px;box-shadow:0 18px 55px rgba(0,0,0,.38);backdrop-filter:blur(12px)}
+h2{margin:0 0 5px}.sub{margin:0 0 15px;color:#e0cde8;font-size:14px}
+.file{position:relative;display:block;overflow:hidden;border:2px dashed rgba(255,42,168,.6);border-radius:18px;padding:20px;text-align:center;font-weight:900;background:rgba(255,42,168,.08)}
 .file input{position:absolute;inset:0;opacity:0}
-.btns{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
-button{border:0;border-radius:15px;padding:14px 12px;font-weight:900;color:#fff;background:linear-gradient(135deg,var(--purple),var(--pink));box-shadow:0 8px 20px rgba(255,42,168,.18)}
-button.secondary{background:#321043;border:1px solid var(--line);box-shadow:none}
-button:disabled{opacity:.4}
-.preview{margin-top:16px;display:none}
-canvas{display:block;max-width:100%;height:auto;margin:auto;border-radius:16px;background:repeating-conic-gradient(#ddd 0 25%,#fff 0 50%) 50%/20px 20px}
-.status{margin-top:12px;padding:11px 13px;border-radius:13px;background:rgba(255,255,255,.06);font-size:13px;color:#eadcf0}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(82px,1fr));gap:10px;margin-top:16px}
-.tile{background:rgba(255,255,255,.07);border:1px solid var(--line);border-radius:14px;padding:8px;text-align:center}
-.tile img{width:100%;aspect-ratio:1;object-fit:contain;background:repeating-conic-gradient(#ddd 0 25%,#fff 0 50%) 50%/12px 12px;border-radius:9px}
-.tile b{display:block;margin:5px 0;font-size:12px}.tile button{width:100%;padding:7px;font-size:11px;border-radius:9px}
-.note{font-size:12px;color:#cdb8d5;margin-top:15px}
-@media(max-width:560px){.controls{grid-template-columns:1fr 1fr}.card{padding:14px;border-radius:20px}.btns{grid-template-columns:1fr}}
+.controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:12px}
+.field{display:flex;flex-direction:column;gap:6px}.field label{font-size:12px;font-weight:900;color:#ead8f3}
+input,select,button{font:inherit;font-size:16px}input,select{width:100%;border:1px solid var(--line);background:#22062e;color:white;border-radius:13px;padding:12px;outline:none}
+.check{display:flex;align-items:center;gap:8px;margin-top:12px;background:rgba(255,255,255,.06);padding:11px;border-radius:13px}.check input{width:22px;height:22px}
+.btns{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:13px}button{border:0;border-radius:15px;padding:14px 10px;font-weight:900;color:#fff;background:linear-gradient(135deg,var(--purple),var(--pink))}button.secondary{background:#351145;border:1px solid var(--line)}button:disabled{opacity:.4}
+.preview{display:none;margin-top:15px}canvas{max-width:100%;height:auto;border-radius:15px;background:repeating-conic-gradient(#ddd 0 25%,#fff 0 50%) 50%/18px 18px}
+.status{margin-top:12px;padding:11px;border-radius:13px;background:rgba(255,255,255,.06);font-size:13px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:10px;margin-top:15px}.tile{background:rgba(255,255,255,.07);border:1px solid var(--line);border-radius:14px;padding:7px;text-align:center}.tile img{width:100%;aspect-ratio:1;object-fit:contain;background:repeating-conic-gradient(#ddd 0 25%,#fff 0 50%) 50%/12px 12px;border-radius:9px}.tile input{padding:7px;text-align:center;margin:5px 0}.tile button{padding:7px;font-size:11px;width:100%;border-radius:9px}
+.help{font-size:12px;color:#ceb8d7;margin-top:14px}
+@media(max-width:560px){.btns{grid-template-columns:1fr}.card{padding:14px}}
 </style>
 </head>
-<body>
-<main class="wrap">
-<header class="brand"><div class="moon">☾ ✦</div><h1>Moonlight Designs</h1><div class="tag">Creative Toolkit • Alpha Splitter V1</div></header>
+<body><main class="wrap">
+<header><div class="moon">☾ ✦</div><h1>Moonlight Designs</h1><div class="tag">SMART SPLITTER • ALPHA + CLIPART • V3</div></header>
 <section class="card">
-<h2>🩷 Alpha Splitter</h2>
-<p class="sub">Upload one evenly spaced alpha sheet, split it into separate transparent PNG files, then save them individually or as one ZIP.</p>
-<label class="file">✨ Choose Alpha Sheet
-<input id="upload" type="file" accept="image/png,image/jpeg,image/webp">
-</label>
+<h2>🩷 Smart Detection Splitter</h2>
+<p class="sub">Upload an alpha sheet or clipart bundle sheet. Moonlight detects separate artwork automatically, adds safe padding, and prepares transparent PNGs.</p>
+<label class="file">✨ Choose Alpha or Clipart Sheet<input id="upload" type="file" accept="image/png,image/jpeg,image/webp"></label>
 <div class="controls">
-<div class="field"><label>Preset</label><select id="preset"><option value="upper">A–Z Uppercase</option><option value="lower">a–z Lowercase</option><option value="numbers">0–9 Numbers</option><option value="custom">Custom Names</option></select></div>
-<div class="field"><label>Columns</label><input id="cols" type="number" min="1" max="50" value="5"></div>
-<div class="field"><label>Rows</label><input id="rows" type="number" min="1" max="50" value="6"></div>
-<div class="field"><label>Cell Padding %</label><input id="pad" type="number" min="0" max="45" value="2"></div>
+<div class="field"><label>Splitter Mode</label><select id="mode"><option value="alpha">Alpha</option><option value="clipart">Clipart Bundle</option></select></div>
+<div class="field"><label>Detection Strength</label><input id="tol" type="range" min="8" max="100" value="38"></div>
+<div class="field"><label>Safe Padding (px)</label><input id="pad" type="number" min="0" max="300" value="35"></div>
+<div class="field"><label>Minimum Object Size</label><input id="min" type="number" min="2" max="500" value="20"></div>
+<div class="field" id="presetField"><label>Naming Preset</label><select id="preset"><option value="upper">A–Z</option><option value="lower">a–z</option><option value="num">0–9</option><option value="custom">Custom</option></select></div>
 </div>
-<div class="field" id="customBox" style="display:none;margin-top:10px"><label>Names, separated by commas</label><input id="custom" placeholder="A,B,C,D..."></div>
+<label class="check"><input id="removeBg" type="checkbox" checked> Remove background automatically</label>
+<div class="field" id="customBox" style="display:none;margin-top:10px"><label>Custom names separated by commas</label><input id="custom" placeholder="A,B,C,D..."></div>
 <div class="preview" id="preview"><canvas id="canvas"></canvas></div>
-<div class="btns">
-<button id="split" disabled>✂️ Split Alpha</button>
-<button id="zip" disabled>📦 Download ZIP</button>
-<button id="clear" class="secondary">Clear</button>
-</div>
+<div class="btns"><button id="detect" disabled>✨ Detect Alpha</button><button id="zip" disabled>📦 Download ZIP</button><button id="clear" class="secondary">Clear</button></div>
 <div class="status" id="status">Choose an alpha sheet to begin.</div>
 <div class="grid" id="grid"></div>
-<p class="note">Tip: set Columns and Rows to match the layout of your sheet. Empty final cells are ignored once all preset characters have been created.</p>
-</section>
-</main>
+<p class="help">Detection works best when letters or clipart pieces do not touch each other. The tool samples the sheet's corner color as the background, then finds connected visible artwork. Increase Detection Strength if background remains; decrease it if fine letter details disappear.</p>
+</section></main>
 <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
 <script>
-(()=> {
-const $=id=>document.getElementById(id), upload=$('upload'), canvas=$('canvas'), ctx=canvas.getContext('2d'), grid=$('grid');
-let img=null, pieces=[];
-const names=()=> {
+(()=>{const $=x=>document.getElementById(x),up=$('upload'),cv=$('canvas'),cx=cv.getContext('2d',{willReadFrequently:true}),grid=$('grid');let img=null,pieces=[];
+$('preset').onchange=()=>{$('customBox').style.display=($('mode').value==='alpha'&&$('preset').value==='custom')?'flex':'none'};
+$('mode').onchange=()=>{
+ const clip=$('mode').value==='clipart';
+ $('presetField').style.display=clip?'none':'flex';
+ $('customBox').style.display=(!clip&&$('preset').value==='custom')?'flex':'none';
+ $('status').textContent=clip?'Clipart Bundle mode ready — upload a sheet and detect separate designs.':'Alpha mode ready — upload an alpha sheet.';
+};
+const labels=()=>{
+ if($('mode').value==='clipart') return [];
  let p=$('preset').value;
- if(p==='upper') return [...'ABCDEFGHIJKLMNOPQRSTUVWXYZ'];
- if(p==='lower') return [...'abcdefghijklmnopqrstuvwxyz'];
- if(p==='numbers') return [...'0123456789'];
- return $('custom').value.split(',').map(x=>x.trim()).filter(Boolean);
+ if(p==='upper')return[...'ABCDEFGHIJKLMNOPQRSTUVWXYZ'];
+ if(p==='lower')return[...'abcdefghijklmnopqrstuvwxyz'];
+ if(p==='num')return[...'0123456789'];
+ return $('custom').value.split(',').map(s=>s.trim()).filter(Boolean)
 };
-$('preset').onchange=()=>{$('customBox').style.display=$('preset').value==='custom'?'flex':'none';};
-upload.onchange=e=>{
- const f=e.target.files[0]; if(!f)return;
- const u=URL.createObjectURL(f); img=new Image();
- img.onload=()=>{canvas.width=img.naturalWidth;canvas.height=img.naturalHeight;ctx.clearRect(0,0,canvas.width,canvas.height);ctx.drawImage(img,0,0);$('preview').style.display='block';$('split').disabled=false;$('status').textContent=`Loaded ${img.naturalWidth} × ${img.naturalHeight}px. Set the grid, then tap Split Alpha.`;URL.revokeObjectURL(u)};
- img.src=u;
-};
-function blobFromCanvas(c){return new Promise(r=>c.toBlob(r,'image/png'))}
-$('split').onclick=async()=>{
- if(!img)return;
- const cols=Math.max(1,+$('cols').value), rows=Math.max(1,+$('rows').value), list=names(), pad=Math.max(0,Math.min(45,+$('pad').value))/100;
- if(!list.length){$('status').textContent='Add at least one custom file name.';return}
- pieces=[];grid.innerHTML='';
- const cw=img.naturalWidth/cols,ch=img.naturalHeight/rows,total=Math.min(list.length,cols*rows);
- for(let i=0;i<total;i++){
-  let col=i%cols,row=Math.floor(i/cols),sx=col*cw+cw*pad,sy=row*ch+ch*pad,sw=cw*(1-pad*2),sh=ch*(1-pad*2);
-  let c=document.createElement('canvas');c.width=Math.round(sw);c.height=Math.round(sh);
-  c.getContext('2d').drawImage(img,sx,sy,sw,sh,0,0,c.width,c.height);
-  let blob=await blobFromCanvas(c), url=URL.createObjectURL(blob), name=list[i].replace(/[\\/:*?"<>|]/g,'_')||('piece-'+(i+1));
-  pieces.push({name,blob,url});
-  let d=document.createElement('div');d.className='tile';d.innerHTML=`<img src="${url}"><b>${name}.png</b><button type="button">Save PNG</button>`;
-  d.querySelector('button').onclick=()=>download(blob,name+'.png');grid.appendChild(d);
- }
- $('zip').disabled=!pieces.length;$('status').textContent=`Split complete — ${pieces.length} PNG files are ready.`;
-};
-function download(blob,name){let a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1200)}
-$('zip').onclick=async()=>{
- if(!pieces.length)return;
- if(typeof JSZip==='undefined'){$('status').textContent='ZIP library could not load. Check your internet connection and reload.';return}
- $('status').textContent='Building ZIP…';
- const zip=new JSZip(), folder=zip.folder('Moonlight-Alpha');
- pieces.forEach(p=>folder.file(p.name+'.png',p.blob));
- const blob=await zip.generateAsync({type:'blob'});
- download(blob,'Moonlight-Alpha-Split.zip');$('status').textContent=`ZIP ready — ${pieces.length} PNG files included.`;
-};
-$('clear').onclick=()=>{pieces.forEach(p=>URL.revokeObjectURL(p.url));pieces=[];img=null;grid.innerHTML='';upload.value='';$('preview').style.display='none';$('split').disabled=true;$('zip').disabled=true;$('status').textContent='Choose an alpha sheet to begin.';ctx.clearRect(0,0,canvas.width,canvas.height)};
-document.addEventListener('gesturestart',e=>e.preventDefault(),{passive:false});
-document.addEventListener('dblclick',e=>e.preventDefault(),{passive:false});
-let last=0;document.addEventListener('touchend',e=>{let n=Date.now();if(n-last<300)e.preventDefault();last=n},{passive:false});
+up.onchange=e=>{let f=e.target.files[0];if(!f)return;let u=URL.createObjectURL(f);img=new Image();img.onload=()=>{cv.width=img.naturalWidth;cv.height=img.naturalHeight;cx.clearRect(0,0,cv.width,cv.height);cx.drawImage(img,0,0);$('preview').style.display='block';$('detect').disabled=false;$('status').textContent=`Loaded ${cv.width} × ${cv.height}px. Tap Detect Alpha.`;URL.revokeObjectURL(u)};img.src=u};
+function bgColor(d,w,h){let pts=[[0,0],[w-1,0],[0,h-1],[w-1,h-1]],s=[0,0,0];pts.forEach(([x,y])=>{let i=(y*w+x)*4;s[0]+=d[i];s[1]+=d[i+1];s[2]+=d[i+2]});return s.map(v=>v/4)}
+function dl(blob,name){let a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1200)}
+$('detect').onclick=async()=>{if(!img)return;$('status').textContent='Detecting separate artwork…';grid.innerHTML='';pieces.forEach(p=>URL.revokeObjectURL(p.url));pieces=[];
+let w=cv.width,h=cv.height,id=cx.getImageData(0,0,w,h),d=id.data,bg=bgColor(d,w,h),tol=+$('tol').value,min=+$('min').value,pad=+$('pad').value,remove=$('removeBg').checked,mask=new Uint8Array(w*h);
+for(let p=0,i=0;p<mask.length;p++,i+=4){let dist=Math.sqrt((d[i]-bg[0])**2+(d[i+1]-bg[1])**2+(d[i+2]-bg[2])**2);mask[p]=(d[i+3]>12&&dist>tol)?1:0;if(remove&&dist<=tol)d[i+3]=0}
+let seen=new Uint8Array(w*h),boxes=[],stack=[];
+for(let y=0;y<h;y++)for(let x=0;x<w;x++){let q=y*w+x;if(!mask[q]||seen[q])continue;let x0=x,x1=x,y0=y,y1=y,count=0;stack.push(q);seen[q]=1;
+while(stack.length){let z=stack.pop(),yy=(z/w)|0,xx=z-yy*w;count++;if(xx<x0)x0=xx;if(xx>x1)x1=xx;if(yy<y0)y0=yy;if(yy>y1)y1=yy;
+let ns=[z-1,z+1,z-w,z+w];for(let n of ns){if(n>=0&&n<mask.length&&!seen[n]&&mask[n]){let ny=(n/w)|0,nx=n-ny*w;if(Math.abs(nx-xx)<=1&&Math.abs(ny-yy)<=1){seen[n]=1;stack.push(n)}}}}
+if((x1-x0+1)>=min&&(y1-y0+1)>=min)boxes.push({x0,y0,x1,y1,count})}
+boxes.sort((a,b)=>{let ay=(a.y0+a.y1)/2,by=(b.y0+b.y1)/2,avg=Math.max(20,Math.min(a.y1-a.y0,b.y1-b.y0)*.6);return Math.abs(ay-by)<avg?a.x0-b.x0:a.y0-b.y0});
+let nm=labels();
+for(let k=0;k<boxes.length;k++){let b=boxes[k],x=Math.max(0,b.x0-pad),y=Math.max(0,b.y0-pad),x2=Math.min(w-1,b.x1+pad),y2=Math.min(h-1,b.y1+pad),ww=x2-x+1,hh=y2-y+1,c=document.createElement('canvas');c.width=ww;c.height=hh;let cc=c.getContext('2d'),crop=new ImageData(new Uint8ClampedArray(ww*hh*4),ww,hh);
+for(let yy=0;yy<hh;yy++)for(let xx=0;xx<ww;xx++){let si=((y+yy)*w+(x+xx))*4,di=(yy*ww+xx)*4;crop.data[di]=d[si];crop.data[di+1]=d[si+1];crop.data[di+2]=d[si+2];crop.data[di+3]=d[si+3]}cc.putImageData(crop,0,0);
+let blob=await new Promise(r=>c.toBlob(r,'image/png')),url=URL.createObjectURL(blob),name=($('mode').value==='clipart'?`clipart-${String(k+1).padStart(2,'0')}`:(nm[k]||`piece-${k+1}`));pieces.push({blob,url,name});let tile=document.createElement('div');tile.className='tile';tile.innerHTML=`<img src="${url}"><input value="${name}" aria-label="file name"><button>Save PNG</button>`;let inp=tile.querySelector('input');inp.onchange=()=>pieces[k].name=inp.value.trim()||`piece-${k+1}`;tile.querySelector('button').onclick=()=>dl(pieces[k].blob,pieces[k].name+'.png');grid.appendChild(tile)}
+$('zip').disabled=!pieces.length;$('status').textContent=`Detected ${pieces.length} separate object${pieces.length===1?'':'s'}. Review the previews before downloading.`};
+$('zip').onclick=async()=>{if(!pieces.length)return;if(typeof JSZip==='undefined'){$('status').textContent='ZIP library did not load. Reload while connected to the internet.';return}let z=new JSZip(),clip=$('mode').value==='clipart',f=z.folder(clip?'Moonlight-Clipart-Bundle':'Moonlight-Detected-Alpha');pieces.forEach(p=>f.file((p.name||'piece')+'.png',p.blob));$('status').textContent='Building ZIP…';let b=await z.generateAsync({type:'blob'});dl(b,clip?'Moonlight-Clipart-Bundle.zip':'Moonlight-Detected-Alpha.zip');$('status').textContent='ZIP ready.'};
+$('clear').onclick=()=>{pieces.forEach(p=>URL.revokeObjectURL(p.url));pieces=[];img=null;up.value='';grid.innerHTML='';$('preview').style.display='none';$('detect').disabled=true;$('zip').disabled=true;$('status').textContent='Choose an alpha sheet to begin.'};
+document.addEventListener('gesturestart',e=>e.preventDefault(),{passive:false});document.addEventListener('dblclick',e=>e.preventDefault(),{passive:false});let last=0;document.addEventListener('touchend',e=>{let n=Date.now();if(n-last<300)e.preventDefault();last=n},{passive:false});
 })();
-</script>
-</body></html>
+</script></body></html>
