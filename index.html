@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#180020">
+<title>Moonlight Designs — Alpha Splitter V1</title>
+<style>
+:root{--bg:#130018;--purple:#7618d7;--pink:#ff2aa8;--lav:#d8a7ff;--ink:#fff8ff;--panel:rgba(38,5,51,.88);--line:rgba(255,255,255,.14)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;touch-action:manipulation}
+body{overflow-x:hidden;background:
+radial-gradient(circle at 18% 10%,rgba(255,42,168,.22),transparent 25%),
+radial-gradient(circle at 82% 25%,rgba(118,24,215,.3),transparent 28%),
+linear-gradient(155deg,#120018,#25002e 48%,#10001b)}
+body:before{content:"✦  ☾  ·  ✧  ★  ·  ☽  ✦  ·  ★  ✧  ☾  ·  ✦  ☽  ·  ★  ✧  ☾  ·  ✦";position:fixed;inset:0;color:rgba(255,255,255,.14);font-size:28px;line-height:105px;letter-spacing:22px;word-spacing:32px;pointer-events:none;transform:rotate(-7deg) scale(1.15)}
+.wrap{width:min(940px,100%);margin:auto;padding:calc(20px + env(safe-area-inset-top)) 16px calc(34px + env(safe-area-inset-bottom));position:relative}
+.brand{text-align:center;padding:18px 8px 22px}
+.brand .moon{font-size:46px;filter:drop-shadow(0 0 14px rgba(255,42,168,.6))}
+h1{margin:4px 0 3px;font-size:clamp(29px,7vw,48px);line-height:1;background:linear-gradient(90deg,#e1b6ff,#ff42b5);-webkit-background-clip:text;color:transparent}
+.tag{color:#edcfff;font-weight:700;letter-spacing:.08em;font-size:12px;text-transform:uppercase}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:24px;padding:18px;box-shadow:0 18px 50px rgba(0,0,0,.35);backdrop-filter:blur(12px)}
+h2{margin:0 0 6px;font-size:24px}.sub{margin:0 0 17px;color:#dfcce7;font-size:14px}
+.controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+label{font-size:12px;color:#ebd7f4;font-weight:800}
+.field{display:flex;flex-direction:column;gap:6px}
+input,select,button{font:inherit;font-size:16px}
+input,select{width:100%;border:1px solid var(--line);background:#21052d;color:white;border-radius:13px;padding:12px;outline:none}
+.file{position:relative;overflow:hidden;display:block;border:2px dashed rgba(255,42,168,.55);border-radius:18px;padding:19px;text-align:center;background:rgba(255,42,168,.08);margin-bottom:13px;font-weight:800}
+.file input{position:absolute;inset:0;opacity:0}
+.btns{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+button{border:0;border-radius:15px;padding:14px 12px;font-weight:900;color:#fff;background:linear-gradient(135deg,var(--purple),var(--pink));box-shadow:0 8px 20px rgba(255,42,168,.18)}
+button.secondary{background:#321043;border:1px solid var(--line);box-shadow:none}
+button:disabled{opacity:.4}
+.preview{margin-top:16px;display:none}
+canvas{display:block;max-width:100%;height:auto;margin:auto;border-radius:16px;background:repeating-conic-gradient(#ddd 0 25%,#fff 0 50%) 50%/20px 20px}
+.status{margin-top:12px;padding:11px 13px;border-radius:13px;background:rgba(255,255,255,.06);font-size:13px;color:#eadcf0}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(82px,1fr));gap:10px;margin-top:16px}
+.tile{background:rgba(255,255,255,.07);border:1px solid var(--line);border-radius:14px;padding:8px;text-align:center}
+.tile img{width:100%;aspect-ratio:1;object-fit:contain;background:repeating-conic-gradient(#ddd 0 25%,#fff 0 50%) 50%/12px 12px;border-radius:9px}
+.tile b{display:block;margin:5px 0;font-size:12px}.tile button{width:100%;padding:7px;font-size:11px;border-radius:9px}
+.note{font-size:12px;color:#cdb8d5;margin-top:15px}
+@media(max-width:560px){.controls{grid-template-columns:1fr 1fr}.card{padding:14px;border-radius:20px}.btns{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<main class="wrap">
+<header class="brand"><div class="moon">☾ ✦</div><h1>Moonlight Designs</h1><div class="tag">Creative Toolkit • Alpha Splitter V1</div></header>
+<section class="card">
+<h2>🩷 Alpha Splitter</h2>
+<p class="sub">Upload one evenly spaced alpha sheet, split it into separate transparent PNG files, then save them individually or as one ZIP.</p>
+<label class="file">✨ Choose Alpha Sheet
+<input id="upload" type="file" accept="image/png,image/jpeg,image/webp">
+</label>
+<div class="controls">
+<div class="field"><label>Preset</label><select id="preset"><option value="upper">A–Z Uppercase</option><option value="lower">a–z Lowercase</option><option value="numbers">0–9 Numbers</option><option value="custom">Custom Names</option></select></div>
+<div class="field"><label>Columns</label><input id="cols" type="number" min="1" max="50" value="5"></div>
+<div class="field"><label>Rows</label><input id="rows" type="number" min="1" max="50" value="6"></div>
+<div class="field"><label>Cell Padding %</label><input id="pad" type="number" min="0" max="45" value="2"></div>
+</div>
+<div class="field" id="customBox" style="display:none;margin-top:10px"><label>Names, separated by commas</label><input id="custom" placeholder="A,B,C,D..."></div>
+<div class="preview" id="preview"><canvas id="canvas"></canvas></div>
+<div class="btns">
+<button id="split" disabled>✂️ Split Alpha</button>
+<button id="zip" disabled>📦 Download ZIP</button>
+<button id="clear" class="secondary">Clear</button>
+</div>
+<div class="status" id="status">Choose an alpha sheet to begin.</div>
+<div class="grid" id="grid"></div>
+<p class="note">Tip: set Columns and Rows to match the layout of your sheet. Empty final cells are ignored once all preset characters have been created.</p>
+</section>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+<script>
+(()=> {
+const $=id=>document.getElementById(id), upload=$('upload'), canvas=$('canvas'), ctx=canvas.getContext('2d'), grid=$('grid');
+let img=null, pieces=[];
+const names=()=> {
+ let p=$('preset').value;
+ if(p==='upper') return [...'ABCDEFGHIJKLMNOPQRSTUVWXYZ'];
+ if(p==='lower') return [...'abcdefghijklmnopqrstuvwxyz'];
+ if(p==='numbers') return [...'0123456789'];
+ return $('custom').value.split(',').map(x=>x.trim()).filter(Boolean);
+};
+$('preset').onchange=()=>{$('customBox').style.display=$('preset').value==='custom'?'flex':'none';};
+upload.onchange=e=>{
+ const f=e.target.files[0]; if(!f)return;
+ const u=URL.createObjectURL(f); img=new Image();
+ img.onload=()=>{canvas.width=img.naturalWidth;canvas.height=img.naturalHeight;ctx.clearRect(0,0,canvas.width,canvas.height);ctx.drawImage(img,0,0);$('preview').style.display='block';$('split').disabled=false;$('status').textContent=`Loaded ${img.naturalWidth} × ${img.naturalHeight}px. Set the grid, then tap Split Alpha.`;URL.revokeObjectURL(u)};
+ img.src=u;
+};
+function blobFromCanvas(c){return new Promise(r=>c.toBlob(r,'image/png'))}
+$('split').onclick=async()=>{
+ if(!img)return;
+ const cols=Math.max(1,+$('cols').value), rows=Math.max(1,+$('rows').value), list=names(), pad=Math.max(0,Math.min(45,+$('pad').value))/100;
+ if(!list.length){$('status').textContent='Add at least one custom file name.';return}
+ pieces=[];grid.innerHTML='';
+ const cw=img.naturalWidth/cols,ch=img.naturalHeight/rows,total=Math.min(list.length,cols*rows);
+ for(let i=0;i<total;i++){
+  let col=i%cols,row=Math.floor(i/cols),sx=col*cw+cw*pad,sy=row*ch+ch*pad,sw=cw*(1-pad*2),sh=ch*(1-pad*2);
+  let c=document.createElement('canvas');c.width=Math.round(sw);c.height=Math.round(sh);
+  c.getContext('2d').drawImage(img,sx,sy,sw,sh,0,0,c.width,c.height);
+  let blob=await blobFromCanvas(c), url=URL.createObjectURL(blob), name=list[i].replace(/[\\/:*?"<>|]/g,'_')||('piece-'+(i+1));
+  pieces.push({name,blob,url});
+  let d=document.createElement('div');d.className='tile';d.innerHTML=`<img src="${url}"><b>${name}.png</b><button type="button">Save PNG</button>`;
+  d.querySelector('button').onclick=()=>download(blob,name+'.png');grid.appendChild(d);
+ }
+ $('zip').disabled=!pieces.length;$('status').textContent=`Split complete — ${pieces.length} PNG files are ready.`;
+};
+function download(blob,name){let a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1200)}
+$('zip').onclick=async()=>{
+ if(!pieces.length)return;
+ if(typeof JSZip==='undefined'){$('status').textContent='ZIP library could not load. Check your internet connection and reload.';return}
+ $('status').textContent='Building ZIP…';
+ const zip=new JSZip(), folder=zip.folder('Moonlight-Alpha');
+ pieces.forEach(p=>folder.file(p.name+'.png',p.blob));
+ const blob=await zip.generateAsync({type:'blob'});
+ download(blob,'Moonlight-Alpha-Split.zip');$('status').textContent=`ZIP ready — ${pieces.length} PNG files included.`;
+};
+$('clear').onclick=()=>{pieces.forEach(p=>URL.revokeObjectURL(p.url));pieces=[];img=null;grid.innerHTML='';upload.value='';$('preview').style.display='none';$('split').disabled=true;$('zip').disabled=true;$('status').textContent='Choose an alpha sheet to begin.';ctx.clearRect(0,0,canvas.width,canvas.height)};
+document.addEventListener('gesturestart',e=>e.preventDefault(),{passive:false});
+document.addEventListener('dblclick',e=>e.preventDefault(),{passive:false});
+let last=0;document.addEventListener('touchend',e=>{let n=Date.now();if(n-last<300)e.preventDefault();last=n},{passive:false});
+})();
+</script>
+</body></html>
